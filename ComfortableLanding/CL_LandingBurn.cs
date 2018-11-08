@@ -6,7 +6,8 @@ public class CL_LandingBurn : PartModule
     ModuleEngines engine;
 
     [KSPField]
-    public double burnAltitude = 3.0;
+    public double burnAltitude = 200.0;
+    public bool triggered = false;
 
     public override void OnStart(PartModule.StartState state)
     {
@@ -22,6 +23,6 @@ public class CL_LandingBurn : PartModule
     {
         Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Landing Burn!");
         ScreenMessages.PostScreenMessage("<color=#00ff00ff>[ComfortableLanding]Landing Burn!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
-        engine.Activate();        
+        engine.Activate();
     }
  }

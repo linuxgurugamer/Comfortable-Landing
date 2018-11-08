@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using KSP.Localization;
 //Update for 1.4.1
 
@@ -92,6 +93,7 @@ public class CL_ControlTool : PartModule
             Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Detected CL_Buoy and CL_ Airbag, only activate CL_Buoy.");
         }
         //*/
+
     }
     
     public void FixedUpdate()
@@ -103,10 +105,24 @@ public class CL_ControlTool : PartModule
             {
                 if (alreadyFired == false)
                 {
-                    if (vessel.radarAltitude <= burn.burnAltitude)
+                    if(BurnRay())
                     {
-                        burn.Fire();
                         alreadyFired = true;
+                    }
+                }
+                else
+                {
+                    if (this.vessel.situation != Vessel.Situations.LANDED|| this.vessel.situation != Vessel.Situations.SPLASHED && burn.triggered)
+                    {
+                                foreach (Part p in this.vessel.parts)
+                                {
+                                     if ((p.physicalSignificance == Part.PhysicalSignificance.FULL) && (p.rb != null))
+                                     {
+                                            Vector3 gee = FlightGlobals.getGeeForceAtPosition(this.vessel.transform.position);
+                                            p.AddForce(-gee.normalized * p.rb.mass *((float)Math.Min(Math.Abs(this.vessel.verticalSpeed),gee.magnitude)+gee.magnitude));
+                                     }
+                                }
+                                Debug.Log(this.vessel.srf_velocity.magnitude);
                     }
                 }
             }
@@ -166,6 +182,29 @@ public class CL_ControlTool : PartModule
                 IsActivate = false;
                 Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>The vessel has landed or splashed, deactivate pre-landing mode.");
             }
+        }
+    }
+
+    public bool BurnRay()
+    {
+        if (vessel.radarAltitude <= burn.burnAltitude)
+        {
+            RaycastHit hit;
+            Ray rcray = new Ray(this.part.transform.position, FlightGlobals.getGeeForceAtPosition(this.vessel.transform.position));
+            if (Physics.Raycast(rcray, out hit) && hit.distance < Math.Abs(this.vessel.verticalSpeed)/2)
+            {
+                burn.Fire();
+                burn.triggered = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
         }
     }
 
