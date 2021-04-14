@@ -3,5 +3,10 @@ Changelog
 	Added configs for mk1pod_v2
 	Fixed bug where it could be activated while landed or splashed
 	Added message when trying to active while landed or splashed
-	Added config for ReStock
-	
+	Added config for ReStock & fixed an offset issue in contributed patch
+	Added Namespace to all code files
+	Refactored code to move all module-specific code into that module, leaving all common code in CL_ControlTool_Internal.  
+	The three PartModules now inherit from CL_ControlTool_Internal
+	Added dummy CL_ControlTool to allow compatibility for other parts
+	Removed the CL_ControlTool module from all configs
+	Made air bag default over a short period of time rather than instantaneous

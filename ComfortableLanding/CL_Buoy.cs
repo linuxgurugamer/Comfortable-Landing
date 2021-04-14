@@ -1,77 +1,100 @@
 ﻿using UnityEngine;
 using KSP.Localization;
 
-public class CL_Buoy : PartModule
+
+namespace ComfortableLanding
 {
-    ModuleAnimateGeneric InflateAnim;
 
-    AudioClip playSound;
-    AudioSource audioSource;
-
-    [KSPField]
-    public float buoyancyAfterInflated = 1.2f;
-    public Vector3 COBAfterInflated = new Vector3(0.0f, 0.0f, 0.0f);
-    public Vector3 COMAfterInflated = new Vector3(0.0f, 0.0f, 0.0f);
-    public bool changeCOM = false;
-
-    public string playSoundPath = "ComfortableLanding/Sounds/Inflate_B";
-    public float volume = 1.0f;
-
-    //public string animName = null;
-    //public int animLayer = 0;
-
-    public override void OnStart(StartState state)
+    public class CL_Buoy : CL_ControlTool_Internal
     {
-        InflateAnim =part.Modules["ModuleAnimateGeneric"] as ModuleAnimateGeneric;
-        if (InflateAnim == null)
-            Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Animation Missing!");
-        /*
-        foreach (ModuleAnimateGeneric anim in part.Modules)
+        ModuleAnimateGeneric InflateAnim;
+
+        AudioClip playSound;
+        AudioSource audioSource;
+
+        [KSPField]
+        public float buoyancyAfterInflated = 1.2f;
+        public Vector3 COBAfterInflated = new Vector3(0.0f, 0.0f, 0.0f);
+        public Vector3 COMAfterInflated = new Vector3(0.0f, 0.0f, 0.0f);
+        public bool changeCOM = false;
+
+        public string playSoundPath = "ComfortableLanding/Sounds/Inflate_B";
+        public float volume = 1.0f;
+
+        //public string animName = null;
+        //public int animLayer = 0;
+
+        public override void OnStart(StartState state)
         {
-            if (anim.animationName == animName && anim.layer == animLayer)
+            base.OnStart(state);
+
+            InflateAnim = part.Modules["ModuleAnimateGeneric"] as ModuleAnimateGeneric;
+            if (InflateAnim == null)
+                Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Animation Missing!");
+            /*
+            foreach (ModuleAnimateGeneric anim in part.Modules)
             {
-                InflateAnim = anim;
-                break;
+                if (anim.animationName == animName && anim.layer == animLayer)
+                {
+                    InflateAnim = anim;
+                    break;
+                }
             }
-        }
-        */
-        if (InflateAnim == null)
-            Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Animation Missing!");
+            */
+            if (InflateAnim == null)
+                Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Animation Missing!");
 
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.bypassListenerEffects = true;
-        audioSource.minDistance = .3f;
-        audioSource.maxDistance = 1000;
-        audioSource.priority = 10;
-        audioSource.dopplerLevel = 0;
-        audioSource.spatialBlend = 1;
-        playSound = GameDatabase.Instance.GetAudioClip(playSoundPath);
-        audioSource.clip = playSound;
-        audioSource.loop = false;
-        audioSource.time = 0;
-        if (volume < 0)
-        {
-            volume = 0.0f;
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.bypassListenerEffects = true;
+            audioSource.minDistance = .3f;
+            audioSource.maxDistance = 1000;
+            audioSource.priority = 10;
+            audioSource.dopplerLevel = 0;
+            audioSource.spatialBlend = 1;
+            playSound = GameDatabase.Instance.GetAudioClip(playSoundPath);
+            audioSource.clip = playSound;
+            audioSource.loop = false;
+            audioSource.time = 0;
+            if (volume < 0)
+            {
+                volume = 0.0f;
+            }
+            else if (volume > 1)
+            {
+                volume = 1.0f;
+            }
+            audioSource.volume = volume;
         }
-        else if (volume > 1)
+        public void Inflate()
         {
-            volume = 1.0f;
+            ScreenMessages.PostScreenMessage("<color=#00ff00ff>[ComfortableLanding]Inflate!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+            audioSource.PlayOneShot(playSound);
+            InflateAnim.allowManualControl = true;
+            InflateAnim.Toggle();
+            //InflateAnim.allowManualControl = false;
+            this.part.buoyancy = buoyancyAfterInflated;//This is a really buoy!
+            this.part.CenterOfBuoyancy = COBAfterInflated;
+            if (changeCOM == true)
+            {
+                this.part.CoMOffset = COMAfterInflated;
+            }
+            Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Inflate!");
         }
-        audioSource.volume = volume;
-    }
-    public void Inflate()
-    {
-        ScreenMessages.PostScreenMessage("<color=#00ff00ff>[ComfortableLanding]Inflate!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
-        audioSource.PlayOneShot(playSound);
-        InflateAnim.allowManualControl = true;
-        InflateAnim.Toggle();
-        //InflateAnim.allowManualControl = false;
-        this.part.buoyancy = buoyancyAfterInflated;//This is a really buoy!
-        this.part.CenterOfBuoyancy = COBAfterInflated;
-        if (changeCOM == true)
+
+
+        public void FixedUpdate()
         {
-            this.part.CoMOffset = COMAfterInflated;
+            if (!IsActivate)
+                return;
+            if (alreadyInflated == false)
+            {
+                if (vessel.Splashed)
+                {
+                    Inflate();
+                    alreadyInflated = true;
+                }
+            }
+            CheckLandedOrSplashed();
         }
-        Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Inflate!");
     }
 }
