@@ -1,0 +1,7 @@
+Changelog
+
+	Added configs for mk1pod_v2
+	Fixed bug where it could be activated while landed or splashed
+	Added message when trying to active while landed or splashed
+	Added config for ReStock
+	

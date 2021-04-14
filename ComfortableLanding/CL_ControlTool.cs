@@ -11,17 +11,26 @@ public class CL_ControlTool : PartModule
 
     [KSPField]
     public bool IsActivate = false;
+    [KSPField]
     private bool alreadyFired = false;
+    [KSPField]
     private bool alreadyInflated = false;
+    [KSPField]
     private bool alreadyInflatedAirBag = false;
+    [KSPField]
     private bool alreadyDeflatedAirBag = false;
 
     [KSPEvent(name = "Activate", guiName = "Activate Pre-Landing Mode", active = true, guiActive = true)]
     public void Activate()
     {
-       IsActivate = true;
-       Events["Deactivate"].guiActive = true;
-       Events["Activate"].guiActive = false;
+        if (vessel.LandedOrSplashed)
+            ScreenMessages.PostScreenMessage("<color=#00ff00ff>Cannot be activated while landed!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+        else
+        {
+            IsActivate = true;
+            Events["Deactivate"].guiActive = true;
+            Events["Activate"].guiActive = false;
+        }
     }
 
     [KSPEvent(name = "Deactivate", guiName = "Deactivate Pre-Landing Mode", active = true, guiActive = false)]
@@ -30,7 +39,7 @@ public class CL_ControlTool : PartModule
         IsActivate = false;
         Events["Deactivate"].guiActive = false;
         Events["Activate"].guiActive = true;
-       
+
     }
 
     [KSPAction("Toggle Pre-Landing Mode", KSPActionGroup.None)]
@@ -38,6 +47,9 @@ public class CL_ControlTool : PartModule
     {
         if (IsActivate == false)
         {
+            if (vessel.LandedOrSplashed)
+                ScreenMessages.PostScreenMessage("<color=#00ff00ff>Cannot be activated while landed!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+else
             Activate();
         }
         else
@@ -49,13 +61,16 @@ public class CL_ControlTool : PartModule
     [KSPAction("Activate Pre-Landing Mode", KSPActionGroup.None)]
     public void ActionActivate(KSPActionParam param)
     {
+        if (vessel.LandedOrSplashed)
+            ScreenMessages.PostScreenMessage("<color=#00ff00ff>Cannot be activated while landed!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+        else
             Activate();
     }
 
     [KSPAction("Deactivate Pre-Landing Mode", KSPActionGroup.None)]
     public void ActionDeactivate(KSPActionParam param)
     {
-            Deactivate();
+        Deactivate();
     }
 
     public override void OnStart(PartModule.StartState state)
@@ -72,8 +87,8 @@ public class CL_ControlTool : PartModule
             Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Not detected CL_Buoy");
         }
 
-        airbag=part.Modules["CL_AirBag"] as CL_AirBag;
-        if(airbag==null)
+        airbag = part.Modules["CL_AirBag"] as CL_AirBag;
+        if (airbag == null)
         {
             Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Not detected CL_AirBag");
         }
@@ -95,7 +110,7 @@ public class CL_ControlTool : PartModule
         //*/
 
     }
-    
+
     public void FixedUpdate()
     {
         if (IsActivate == true)
@@ -105,24 +120,24 @@ public class CL_ControlTool : PartModule
             {
                 if (alreadyFired == false)
                 {
-                    if(BurnRay())
+                    if (BurnRay())
                     {
                         alreadyFired = true;
                     }
                 }
                 else
                 {
-                    if (this.vessel.situation != Vessel.Situations.LANDED|| this.vessel.situation != Vessel.Situations.SPLASHED && burn.triggered)
+                    if (this.vessel.situation != Vessel.Situations.LANDED && this.vessel.situation != Vessel.Situations.SPLASHED && burn.triggered)
                     {
-                                foreach (Part p in this.vessel.parts)
-                                {
-                                     if ((p.physicalSignificance == Part.PhysicalSignificance.FULL) && (p.rb != null))
-                                     {
-                                            Vector3 gee = FlightGlobals.getGeeForceAtPosition(this.vessel.transform.position);
-                                            p.AddForce(-gee.normalized * p.rb.mass *((float)Math.Min(Math.Abs(this.vessel.verticalSpeed),gee.magnitude)+gee.magnitude));
-                                     }
-                                }
-                                Debug.Log(this.vessel.srf_velocity.magnitude);
+                        foreach (Part p in this.vessel.parts)
+                        {
+                            if ((p.physicalSignificance == Part.PhysicalSignificance.FULL) && (p.rb != null))
+                            {
+                                Vector3 gee = FlightGlobals.getGeeForceAtPosition(this.vessel.transform.position);
+                                p.AddForce(-gee.normalized * p.rb.mass * ((float)Math.Min(Math.Abs(this.vessel.verticalSpeed), gee.magnitude) + gee.magnitude));
+                            }
+                        }
+                        Debug.Log(this.vessel.srf_velocity.magnitude);
                     }
                 }
             }
@@ -175,7 +190,7 @@ public class CL_ControlTool : PartModule
                 }
             }
             //Check
-            if (vessel.Landed|| vessel.Splashed)
+            if (vessel.Landed || vessel.Splashed)
             {
                 Events["Deactivate"].guiActive = false;
                 Events["Activate"].guiActive = false;
@@ -191,7 +206,7 @@ public class CL_ControlTool : PartModule
         {
             RaycastHit hit;
             Ray rcray = new Ray(this.part.transform.position, FlightGlobals.getGeeForceAtPosition(this.vessel.transform.position));
-            if (Physics.Raycast(rcray, out hit) && hit.distance < Math.Abs(this.vessel.verticalSpeed)/2)
+            if (Physics.Raycast(rcray, out hit) && hit.distance < Math.Abs(this.vessel.verticalSpeed) / 2)
             {
                 burn.Fire();
                 burn.triggered = true;
