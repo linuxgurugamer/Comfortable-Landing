@@ -1,5 +1,8 @@
 Changelog
 
+2.0.0.1
+	Fixed Bluedog Mercury and Gemini capsules (BDB 1.7.2)
+
 2.0.0
 	Adoption by Linuxgurugamer
 	Added configs for mk1pod_v2
