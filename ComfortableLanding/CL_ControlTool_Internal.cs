@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
+using System.Linq;
 using KSP.Localization;
-//Update for 1.4.1
 
 namespace ComfortableLanding
 {
@@ -19,6 +19,10 @@ namespace ComfortableLanding
         public bool alreadyInflatedAirBag = false;
         [KSPField]
         public bool alreadyDeflatedAirBag = false;
+
+        [KSPField]
+        internal bool automaticActivation = true;
+
 
         [KSPEvent(name = "Activate", guiName = "Activate Pre-Landing Mode", active = true, guiActive = true)]
         public void Activate()
@@ -73,10 +77,86 @@ namespace ComfortableLanding
             Deactivate();
         }
 
+
+        [KSPEvent(guiName = "Enable automatic activation", active = true, guiActive = false)]
+        public void EnableAutomaticActivation()
+        {
+            DoEnableAutomaticActivation();
+        }
+
+        [KSPEvent( guiName = "Disable automatic activation", active = true, guiActive = true)]
+        public void DisableAutomaticActivation()
+        {
+            DoDisableAutomaticActivation();
+        }
+
+        [KSPAction("Toggle automatic activation", KSPActionGroup.None)]
+        public void ToggleAutomaticActivation(KSPActionParam param)
+        {
+            automaticActivation = !automaticActivation;
+        }
+
+        void DoEnableAutomaticActivation()
+        {
+            automaticActivation = true;
+            Events["EnableAutomaticActivation"].guiActive = false;
+            Events["DisableAutomaticActivation"].guiActive = true;
+        }
+        void DoDisableAutomaticActivation()
+        {
+            automaticActivation = false;
+            Events["EnableAutomaticActivation"].guiActive = true;
+            Events["DisableAutomaticActivation"].guiActive = false;
+        }
+
+
         //*/
 
+        public void Start()
+        {
+            GameEvents.onStageSeparation.Add(onStageSeparation);
+            if (!HighLogic.CurrentGame.Parameters.CustomParams<CL_Settings>().automaticActivation)
+            {
+                DisableAutomaticActivation();
+            }
 
+        }
+        public void OnDestroy()
+        {
+            GameEvents.onStageSeparation.Remove(onStageSeparation);
+        }
 
+        AttachNode GetNode(string nodeId, Part p)
+        {
+            foreach (var attachNode in p.attachNodes.Where(an => an != null))
+            {
+                if (p.srfAttachNode != null && attachNode == p.srfAttachNode)
+                    continue;
+                if (attachNode.id == nodeId)
+                    return attachNode;
+
+            }
+            return null;
+        }
+
+        void onStageSeparation(EventReport er)
+        {
+            if (HighLogic.CurrentGame.Parameters.CustomParams<CL_Settings>().automaticActivation && automaticActivation)
+            {
+                var bottomNode = GetNode("bottom", this.part);
+                if (bottomNode != null)
+                {
+                    if (bottomNode.attachedPart == null)
+                    {
+                        if (!vessel.LandedOrSplashed)
+                        {
+                            Activate();
+                            ScreenMessages.PostScreenMessage("<color=#00ff00ff>Comfortable Landing Auto-Activated</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+                        }
+                    }
+                }
+            }
+        }
 
         public void CheckLandedOrSplashed()
         {

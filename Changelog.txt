@@ -1,5 +1,12 @@
 Changelog
 
+2.0.1
+	Added automatic activation under following condition:
+		Activated after stage event and nothing attached to bottom node
+	Added settings page to disable automatic activation
+	Added KSPEvent to disable/enable automatic activation
+	Added KSPAction to toggle the automatic activation
+
 2.0.0.1
 	Fixed Bluedog Mercury and Gemini capsules (BDB 1.7.2)
 
