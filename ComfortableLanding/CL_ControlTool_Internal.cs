@@ -22,6 +22,22 @@ namespace ComfortableLanding
 
         [KSPField]
         internal bool automaticActivation = true;
+        [KSPField]
+        internal float originalBuoyancy = -1.0f;
+
+        [KSPField]
+        public Vector3 COMBeforeInflated = new Vector3(0.0f, 0.0f, 0.0f);
+        [KSPField]
+        public Vector3 COBAfterInflated = new Vector3(0.0f, 0.0f, 0.0f);
+        [KSPField]
+        public Vector3 COMAfterInflated = new Vector3(0.0f, 0.0f, 0.0f);
+        [KSPField]
+        public bool changeCOM = false;
+        [KSPField]
+        public Vector3 originalCOB = new Vector3(0.0f, 0.0f, 0.0f);
+
+        [KSPField(guiName = "Buoyancy After Inflated", guiFormat = "F1", guiActive = true, isPersistant = true), UI_FloatRange(minValue = 0.1f, maxValue = 2.0f, stepIncrement = 0.1f)]
+        public float buoyancyAfterInflated = 1.2f;
 
 
         [KSPEvent(name = "Activate", guiName = "Activate Pre-Landing Mode", active = true, guiActive = true)]
@@ -109,7 +125,29 @@ namespace ComfortableLanding
             Events["DisableAutomaticActivation"].guiActive = false;
         }
 
+        [KSPEvent(guiName = "Apply Buoyancy Setting", active = true, guiActive = true)]
+        public void ApplyBuoyancySetting()
+        {
+            if (originalBuoyancy == -1)
+                originalBuoyancy = this.part.buoyancy;
+            this.part.buoyancy = originalBuoyancy *  buoyancyAfterInflated;
+            this.part.CenterOfBuoyancy = COBAfterInflated;
+            if (changeCOM == true)
+            {
+                COMBeforeInflated = this.part.CoMOffset;
+                this.part.CoMOffset = COMAfterInflated;
+            }
+        }
+        public void ResetBuoyanceSetting()
+        {
+            this.part.buoyancy = originalBuoyancy;
+            this.part.CenterOfBuoyancy = originalCOB;
+            if (changeCOM == true)
+            {
+                this.part.CoMOffset = COMBeforeInflated;
+            }
 
+        }
         //*/
 
         public void Start()
@@ -119,7 +157,11 @@ namespace ComfortableLanding
             {
                 DisableAutomaticActivation();
             }
-
+            if (!HighLogic.CurrentGame.Parameters.CustomParams<CL_Settings>().debugMode)
+             {
+                Fields["buoyancyAfterInflated"].guiActive = false;
+                Events["ApplyBuoyancySetting"].guiActive = false;
+            }
         }
         public void OnDestroy()
         {

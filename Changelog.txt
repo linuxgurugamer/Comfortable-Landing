@@ -1,5 +1,21 @@
 Changelog
 
+2.0.1.1 
+	Change buoyancy change from fixed value to a multiplicative, to support RationalBuoyancy and other mods which might change the buoyancy
+	Moved all bouyancy variables and changes into common function in parent class
+	Added more public fields for configurations:
+		For all modules
+			COBAfterInflated 
+			COMAfterInflated
+			changeCOM
+			buoyancyAfterInflated (1 = no change)
+
+		Airbag
+			inflateAltitude
+			crashToleranceAfterInflated
+
+	Fixed size and position for stock Mk2Pod
+
 2.0.1
 	Added automatic activation under following condition:
 		Activated after stage event and nothing attached to bottom node

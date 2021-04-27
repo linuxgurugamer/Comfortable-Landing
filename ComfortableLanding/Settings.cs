@@ -20,8 +20,13 @@ namespace ComfortableLanding
         public override bool HasPresets { get { return false; } }
 
 
-        [GameParameters.CustomParameterUI("Enable Automatic Activation")]//Use KSP skin
+        [GameParameters.CustomParameterUI("Enable Automatic Activation")]
         public bool automaticActivation = true;
+
+
+        [GameParameters.CustomParameterUI("Debug mode", 
+            toolTip ="Enables displaying the buoyancy adjustment value and a button to apply any changes, useful for debugging and configuring new values")]
+        public bool debugMode = false;
 
 
         public override void SetDifficultyPreset(GameParameters.Preset preset) { }

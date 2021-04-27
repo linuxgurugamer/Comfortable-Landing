@@ -12,11 +12,6 @@ namespace ComfortableLanding
         AudioClip playSound;
         AudioSource audioSource;
 
-        [KSPField]
-        public float buoyancyAfterInflated = 1.2f;
-        public Vector3 COBAfterInflated = new Vector3(0.0f, 0.0f, 0.0f);
-        public Vector3 COMAfterInflated = new Vector3(0.0f, 0.0f, 0.0f);
-        public bool changeCOM = false;
 
         public string playSoundPath = "ComfortableLanding/Sounds/Inflate_B";
         public float volume = 1.0f;
@@ -72,12 +67,7 @@ namespace ComfortableLanding
             InflateAnim.allowManualControl = true;
             InflateAnim.Toggle();
             //InflateAnim.allowManualControl = false;
-            this.part.buoyancy = buoyancyAfterInflated;//This is a really buoy!
-            this.part.CenterOfBuoyancy = COBAfterInflated;
-            if (changeCOM == true)
-            {
-                this.part.CoMOffset = COMAfterInflated;
-            }
+            ApplyBuoyancySetting();//This is a really buoy!
             Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Inflate!");
         }
 
@@ -93,8 +83,8 @@ namespace ComfortableLanding
                     Inflate();
                     alreadyInflated = true;
                 }
-            }
-            CheckLandedOrSplashed();
+            } else
+                CheckLandedOrSplashed();
         }
     }
 }

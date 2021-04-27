@@ -16,14 +16,15 @@ namespace ComfortableLanding
 
         [KSPField]
         public double inflateAltitude = 50.0;
+        [KSPField]
         public float crashToleranceAfterInflated = 45.0f;
+
         public string DeflateTransformName = "DeflateTransform";
         public Vector3 deflateScale = new Vector3(1.0f, 1.0f, 1.0f);
         public string InflateTransformName = "InflateTransform";
         public Vector3 inflateScale = new Vector3(0.1f, 0.1f, 0.1f);
         public bool damageAfterSplashed = true;
-        public float buoyancyAfterInflated = 1.2f;
-        public Vector3 COBAfterInflated = new Vector3(0.0f, 0.0f, 0.0f);
+       // public float buoyancyAfterInflated = 1.2f;
 
         public string inflateSoundPath = "ComfortableLanding/Sounds/Inflate_A";
         public string deflateSoundPath = "ComfortableLanding/Sounds/Touchdown";
@@ -34,8 +35,6 @@ namespace ComfortableLanding
         private Transform DeflateTransform = null;
         private Transform InflateTransform = null;
         private float originalCrashTolerance = 0.0f;
-        private float originalBuoyancy = 1.0f;
-        private Vector3 originalCOB = new Vector3(0.0f, 0.0f, 0.0f);
 
         //public string animName = null;
         //public int animLayer = 0;
@@ -105,7 +104,6 @@ namespace ComfortableLanding
 
             this.part.buoyancyUseSine = false;
             originalCrashTolerance = this.part.crashTolerance;
-            originalBuoyancy = this.part.buoyancy;
             originalCOB = this.part.CenterOfBuoyancy;
         }
 
@@ -119,9 +117,8 @@ namespace ComfortableLanding
             //InflateAnim.allowManualControl = false;
             this.part.crashTolerance = crashToleranceAfterInflated;//This is an really airbag!
             this.part.CenterOfBuoyancy = COBAfterInflated;
-            this.part.buoyancy = buoyancyAfterInflated;
+            ApplyBuoyancySetting();
             Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Inflate!");
-
         }
 
         public void Deflate()
@@ -135,8 +132,7 @@ namespace ComfortableLanding
             //DeflateTransform.localScale = deflateScale;
             //InflateTransform.localScale = inflateScale;
             this.part.crashTolerance = originalCrashTolerance;//Not an airbag any more.
-            this.part.buoyancy = originalBuoyancy;
-            this.part.CenterOfBuoyancy = originalCOB;
+            ResetBuoyanceSetting();
             Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Touchdown!");
         }
 

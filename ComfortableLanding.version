@@ -1,7 +1,7 @@
 {
 	"NAME": "ComfortableLanding",
 	"URL": "http://ksp.spacetux.net/avc/ComfortableLanding",
-	"DOWNLOAD": "https://github.com/linuxgurugamer/ComfortableLanding/releases/latest",
+	"DOWNLOAD": "https://spacedock.info/mod/1528/Comfortable%20Landing",
 	"GITHUB": {
 		"USERNAME": "linuxgurugamer",
 		"REPOSITORY": "ComfortableLanding",
@@ -11,7 +11,7 @@
 		"MAJOR": 2,
 		"MINOR": 0,
 		"PATCH": 1,
-		"BUILD": 0
+		"BUILD": 1
 	},
 	"KSP_VERSION": {
 		"MAJOR": 1,
