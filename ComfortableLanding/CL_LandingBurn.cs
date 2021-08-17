@@ -44,7 +44,7 @@ namespace ComfortableLanding
             }
             else
             {
-                if (this.vessel.situation != Vessel.Situations.LANDED && this.vessel.situation != Vessel.Situations.SPLASHED && triggered)
+                if (this.vessel.situation != Vessel.Situations.LANDED && this.vessel.situation != Vessel.Situations.SPLASHED && triggered && this.vessel.verticalSpeed < 0 && !burnCompleted)
                 {
                     foreach (Part p in this.vessel.parts)
                     {
@@ -56,6 +56,8 @@ namespace ComfortableLanding
                     }
                     Debug.Log(this.vessel.srf_velocity.magnitude);
                 }
+                else
+                    burnCompleted = true;
             }
             CheckLandedOrSplashed();
 

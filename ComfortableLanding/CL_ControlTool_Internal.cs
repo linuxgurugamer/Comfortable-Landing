@@ -14,6 +14,8 @@ namespace ComfortableLanding
         [KSPField]
         public bool alreadyFired = false;
         [KSPField]
+        public bool burnCompleted = false;
+        [KSPField]
         public bool alreadyInflated = false;
         [KSPField]
         public bool alreadyInflatedAirBag = false;

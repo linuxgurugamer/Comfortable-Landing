@@ -1,5 +1,11 @@
 Changelog
 
+2.0.2
+	Fixed issue where When the retro rockets activate, the vessel begins to float up even after the rockets have stopped firing.
+	Added AssemblyFileVersion
+	Updated version file for 1.12
+	Fixed position for the mk1 airbag
+
 2.0.1.1 
 	Change buoyancy change from fixed value to a multiplicative, to support RationalBuoyancy and other mods which might change the buoyancy
 	Moved all bouyancy variables and changes into common function in parent class

@@ -9,8 +9,6 @@ rem    but not always
 
 set H=%KSPDIR%
 
-rem set h=R:\KSP_1.11.2
-
 set GAMEDIR=ComfortableLanding
 set GAMEDATA="GameData"
 set VERSIONFILE=%GAMEDIR%.version
