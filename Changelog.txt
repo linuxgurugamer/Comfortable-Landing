@@ -1,5 +1,8 @@
 Changelog
 
+2.0.2.2
+    Fixed Mk2Pod when restock is installed
+    
 2.0.2.1
     Fixed periscope not being deployable on the Bluedog Mercury capsule
     
