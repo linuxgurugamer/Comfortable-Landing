@@ -1,5 +1,8 @@
 Changelog
 
+2.0.2.1
+    Fixed periscope not being deployable on the Bluedog Mercury capsule
+    
 2.0.2
 	Fixed issue where When the retro rockets activate, the vessel begins to float up even after the rockets have stopped firing.
 	Added AssemblyFileVersion
