@@ -1,5 +1,9 @@
 Changelog
 
+2.0.2.3
+	Added code to NoTweakscale patch to remove Tweakscale module from parts
+	Thanks to forum user @m4ti140 for a patch for the new Apollo capsules from BDB
+
 2.0.2.2
     Fixed Mk2Pod when restock is installed
     
