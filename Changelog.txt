@@ -1,5 +1,8 @@
 Changelog
 
+2.0.2.4
+    Changed NoTweakScale patch to hide parts instead of deleting them if TS was installed
+    
 2.0.2.3
 	Added code to NoTweakscale patch to remove Tweakscale module from parts
 	Thanks to forum user @m4ti140 for a patch for the new Apollo capsules from BDB
