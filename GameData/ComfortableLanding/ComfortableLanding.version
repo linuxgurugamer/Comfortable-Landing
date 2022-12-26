@@ -1,26 +1,26 @@
 {
-	"NAME": "ComfortableLanding",
-	"URL": "http://ksp.spacetux.net/avc/ComfortableLanding",
-	"DOWNLOAD": "https://spacedock.info/mod/1528/Comfortable%20Landing",
-	"GITHUB": {
-		"USERNAME": "linuxgurugamer",
-		"REPOSITORY": "ComfortableLanding",
-		"ALLOW_PRE_RELEASE": false
-	},
-	"VERSION": {
-		"MAJOR": 2,
-		"MINOR": 0,
-		"PATCH": 2,
-		"BUILD": 2
-	},
-	"KSP_VERSION": {
-		"MAJOR": 1,
-		"MINOR": 12,
-		"PATCH": 3
-	},
-	"KSP_VERSION_MIN": {
-		"MAJOR": 1,
-		"MINOR": 12,
-		"PATCH": 2
-	}
+  "NAME": "ComfortableLanding",
+  "URL": "http://ksp.spacetux.net/avc/ComfortableLanding",
+  "DOWNLOAD": "https://spacedock.info/mod/1528/Comfortable%20Landing",
+  "GITHUB": {
+    "USERNAME": "linuxgurugamer",
+    "REPOSITORY": "ComfortableLanding",
+    "ALLOW_PRE_RELEASE": false
+  },
+  "VERSION": {
+    "MAJOR": 2,
+    "MINOR": 0,
+    "PATCH": 2,
+    "BUILD": 2
+  },
+  "KSP_VERSION": {
+    "MAJOR": 1,
+    "MINOR": 12,
+    "PATCH": 4
+  },
+  "KSP_VERSION_MIN": {
+    "MAJOR": 1,
+    "MINOR": 12,
+    "PATCH": 2
+  }
 }

@@ -1,5 +1,8 @@
 Changelog
 
+2.0.2.5
+	Actually added the patch from @m4ti140 to the release this time 
+
 2.0.2.4
     Changed NoTweakScale patch to hide parts instead of deleting them if TS was installed
     
