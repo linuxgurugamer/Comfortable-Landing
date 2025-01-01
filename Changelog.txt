@@ -1,5 +1,9 @@
 Changelog
 
+2.0.2.6
+	Updated version file to use github for new version info
+	Copied webpage to README-web.md
+	
 2.0.2.5
 	Actually added the patch from @m4ti140 to the release this time 
 
