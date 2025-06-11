@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Linq;
 using KSP.Localization;
@@ -46,7 +46,7 @@ namespace ComfortableLanding
         public void Activate()
         {
             if (vessel.LandedOrSplashed)
-                ScreenMessages.PostScreenMessage("<color=#00ff00ff>Cannot be activated while landed!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + "#LOC_Comfort_5" + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
             else
             {
                 IsActivate = true;
@@ -70,7 +70,7 @@ namespace ComfortableLanding
             if (IsActivate == false)
             {
                 if (vessel.LandedOrSplashed)
-                    ScreenMessages.PostScreenMessage("<color=#00ff00ff>Cannot be activated while landed!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+                    ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + "#LOC_Comfort_5" + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
                 else
                     Activate();
             }
@@ -84,7 +84,7 @@ namespace ComfortableLanding
         public void ActionActivate(KSPActionParam param)
         {
             if (vessel.LandedOrSplashed)
-                ScreenMessages.PostScreenMessage("<color=#00ff00ff>Cannot be activated while landed!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + "#LOC_Comfort_5" + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
             else
                 Activate();
         }
@@ -161,7 +161,7 @@ namespace ComfortableLanding
             }
             if (!HighLogic.CurrentGame.Parameters.CustomParams<CL_Settings>().debugMode)
              {
-                Fields["buoyancyAfterInflated"].guiActive = false;
+                Fields[Localizer.Format("#LOC_Comfort_6")].guiActive = false;
                 Events["ApplyBuoyancySetting"].guiActive = false;
             }
         }
@@ -195,7 +195,7 @@ namespace ComfortableLanding
                         if (!vessel.LandedOrSplashed)
                         {
                             Activate();
-                            ScreenMessages.PostScreenMessage("<color=#00ff00ff>Comfortable Landing Auto-Activated</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+                            ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + Localizer.Format("#LOC_Comfort_7") + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
                         }
                     }
                 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using KSP.Localization;
 
 
@@ -18,7 +18,7 @@ namespace ComfortableLanding
         public double inflateAltitude = 50.0;
         [KSPField]
         public float crashToleranceAfterInflated = 45.0f;
-
+        #region NO_LOCALIZATION
         public string DeflateTransformName = "DeflateTransform";
         public Vector3 deflateScale = new Vector3(1.0f, 1.0f, 1.0f);
         public string InflateTransformName = "InflateTransform";
@@ -28,6 +28,7 @@ namespace ComfortableLanding
 
         public string inflateSoundPath = "ComfortableLanding/Sounds/Inflate_A";
         public string deflateSoundPath = "ComfortableLanding/Sounds/Touchdown";
+        #endregion
 
         public float volume = 1.0f;
         public float volume2 = 1.0f;
@@ -109,7 +110,7 @@ namespace ComfortableLanding
 
         public void Inflate()
         {
-            ScreenMessages.PostScreenMessage("<color=#00ff00ff>[ComfortableLanding]Inflate!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+            ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + Localizer.Format("#LOC_Comfort_1") + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
             audioSource.PlayOneShot(inflateSound);
             InflateAnim.allowManualControl = true;
             InflateAnim.animSpeed = 1;
@@ -123,7 +124,7 @@ namespace ComfortableLanding
 
         public void Deflate()
         {
-            ScreenMessages.PostScreenMessage("<color=#00ff00ff>[ComfortableLanding]Deflate!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+            ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + Localizer.Format("#LOC_Comfort_2") + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
             audioSource2.PlayOneShot(deflateSound);
 
             InflateAnim.allowManualControl = true;
@@ -138,7 +139,7 @@ namespace ComfortableLanding
 
         public void Touchdown()
         {
-            ScreenMessages.PostScreenMessage("<color=#00ff00ff>[ComfortableLanding]Touchdown!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+            ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + Localizer.Format("#LOC_Comfort_3") + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
             Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Touchdown!");
         }
 

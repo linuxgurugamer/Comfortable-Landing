@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Collections;
@@ -14,7 +14,7 @@ namespace ComfortableLanding
     {
         public override string Title { get { return Localizer.Format("Comfortable Landing"); } }
         public override GameParameters.GameMode GameMode { get { return GameParameters.GameMode.ANY; } }
-        public override string Section { get { return "Comfortable Landing"; } }
+        public override string Section { get { return Localizer.Format("#LOC_Comfort_9"); } }
         public override string DisplaySection { get { return ""; } }
         public override int SectionOrder { get { return 1; } }
         public override bool HasPresets { get { return false; } }
@@ -25,7 +25,7 @@ namespace ComfortableLanding
 
 
         [GameParameters.CustomParameterUI("Debug mode", 
-            toolTip ="Enables displaying the buoyancy adjustment value and a button to apply any changes, useful for debugging and configuring new values")]
+            toolTip ="#LOC_Comfort_10")]
         public bool debugMode = false;
 
 

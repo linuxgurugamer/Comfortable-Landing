@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using KSP.Localization;
 
 
@@ -13,7 +13,7 @@ namespace ComfortableLanding
         AudioSource audioSource;
 
 
-        public string playSoundPath = "ComfortableLanding/Sounds/Inflate_B";
+        public string playSoundPath = Localizer.Format("#LOC_Comfort_4");
         public float volume = 1.0f;
 
         //public string animName = null;
@@ -62,7 +62,7 @@ namespace ComfortableLanding
         }
         public void Inflate()
         {
-            ScreenMessages.PostScreenMessage("<color=#00ff00ff>[ComfortableLanding]Inflate!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+            ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + Localizer.Format("#LOC_Comfort_1") + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
             audioSource.PlayOneShot(playSound);
             InflateAnim.allowManualControl = true;
             InflateAnim.Toggle();

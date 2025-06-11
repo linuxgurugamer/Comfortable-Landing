@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using KSP.Localization;
 
@@ -27,7 +27,7 @@ namespace ComfortableLanding
         public void Fire()
         {
             Debug.Log("<color=#FF8C00ff>[Comfortable Landing]</color>Landing Burn!");
-            ScreenMessages.PostScreenMessage("<color=#00ff00ff>[ComfortableLanding]Landing Burn!</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+            ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + Localizer.Format("#LOC_Comfort_8") + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
             engine.Activate();
         }
 
