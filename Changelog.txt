@@ -1,5 +1,8 @@
 Changelog
 
+2.0.4
+	Added config for the Ursa mod
+	
 2.0.3
 	Added localization tags to all mod parts and code
 
