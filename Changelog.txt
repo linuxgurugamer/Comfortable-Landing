@@ -1,5 +1,9 @@
 Changelog
 
+2.0.5.1
+	Thanks for forum user @Tsing Shi Tao for this:
+		Added patches which fix the bulkheadProfiles for all the buoys
+
 2.0.5 
 	Fixed localized message for when trying to activate while landed
 	Added config for Orion Capsule in the Artemis Construction Kit
