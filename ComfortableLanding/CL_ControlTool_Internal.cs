@@ -38,6 +38,9 @@ namespace ComfortableLanding
         [KSPField]
         public Vector3 originalCOB = new Vector3(0.0f, 0.0f, 0.0f);
 
+        [KSPField]
+        public string bottomNode = "bottom";  // to allow it to be overridden
+
         [KSPField(guiName = "Buoyancy After Inflated", guiFormat = "F1", guiActive = true, isPersistant = true), UI_FloatRange(minValue = 0.1f, maxValue = 2.0f, stepIncrement = 0.1f)]
         public float buoyancyAfterInflated = 1.2f;
 
@@ -46,7 +49,7 @@ namespace ComfortableLanding
         public void Activate()
         {
             if (vessel.LandedOrSplashed)
-                ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + "#LOC_Comfort_5" + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + Localizer.Format("#LOC_Comfort_5") + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
             else
             {
                 IsActivate = true;
@@ -70,7 +73,7 @@ namespace ComfortableLanding
             if (IsActivate == false)
             {
                 if (vessel.LandedOrSplashed)
-                    ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + "#LOC_Comfort_5" + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+                    ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + Localizer.Format("#LOC_Comfort_5") + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
                 else
                     Activate();
             }
@@ -84,7 +87,7 @@ namespace ComfortableLanding
         public void ActionActivate(KSPActionParam param)
         {
             if (vessel.LandedOrSplashed)
-                ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + "#LOC_Comfort_5" + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage("<color=#00ff00ff>" + Localizer.Format("#LOC_Comfort_5") + "</color>", 3f, ScreenMessageStyle.UPPER_CENTER);
             else
                 Activate();
         }
@@ -187,7 +190,7 @@ namespace ComfortableLanding
         {
             if (HighLogic.CurrentGame.Parameters.CustomParams<CL_Settings>().automaticActivation && automaticActivation)
             {
-                var bottomNode = GetNode("bottom", this.part);
+                var bottomNode = GetNode(this.bottomNode, this.part);
                 if (bottomNode != null)
                 {
                     if (bottomNode.attachedPart == null)

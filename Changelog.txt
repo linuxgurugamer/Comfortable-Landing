@@ -1,5 +1,10 @@
 Changelog
 
+2.0.5 
+	Fixed localized message for when trying to activate while landed
+	Added config for Orion Capsule in the Artemis Construction Kit
+	Added override field to specify different node for the bottom other than node_stack_bottom
+
 2.0.4
 	Added config for the Ursa mod
 	
